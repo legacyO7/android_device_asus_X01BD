@@ -280,11 +280,6 @@ service thermal-engine /vendor/bin/thermal-engine
 #    class core
 #    oneshot
 #
-service vendor.time_daemon /vendor/bin/time_daemon
-   class main
-   user root
-   group root
-
 service vendor.adsprpcd_root /vendor/bin/adsprpcd
    class main
    user media
