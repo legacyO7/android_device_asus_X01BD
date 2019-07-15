@@ -116,6 +116,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     debug.sf.enable_hwc_vds=1 \
     debug.sf.early_phase_offset_ns=5000000 \
     debug.sf.hw=1 \
+    ro.sf.hwc_set_default_colormode=true \
     debug.sf.latch_unsignaled=1 \
     dev.pm.dyn_samplingrate=1 \
     persist.demo.hdmirotationlock=false \
@@ -127,7 +128,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
     sdm.debug.disable_skip_validate=1 \
     vendor.display.enable_default_color_mode=1 \
     vendor.gralloc.enable_fb_ubwc=1 \
-    vendor.display.disable_skip_validate=1
+    vendor.display.disable_skip_validate=1 \
+    vendor.gralloc.disable_wb_ubwc=1 \
+    vendor.display.disable_partial_split=1 \
+    vendor.display.disable_rotator_downscale=1 \
+    vendor.display.perf_hint_window=50 \
 
 # Media
 PRODUCT_PROPERTY_OVERRIDES += \
