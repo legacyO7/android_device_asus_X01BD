@@ -505,10 +505,10 @@ on property:sys.boot_completed=1
 
 on charger
     load_system_props
-    start qcom-post-boot
+    start vendor.qcom-post-boot
     start vendor.hvdcp_opti
     setprop sys.usb.configfs 1
-    start power_off_alarm
+    start vendor.power_off_alarm
 
 #
 #service nqs /system/bin/nqs
