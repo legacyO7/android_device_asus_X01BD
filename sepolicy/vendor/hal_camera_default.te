@@ -4,3 +4,6 @@ allow hal_camera_default vendor_camera_data_file:dir rw_dir_perms;
 allow hal_camera_default vendor_camera_data_file:file rw_file_perms;
 allow hal_camera_default mnt_vendor_file:file rw_file_perms;
 allow hal_camera_default vendor_cfg_prop:file r_file_perms;
+allow hal_camera_default mnt_vendor_file:file read;
+allow hal_camera_default vendor_system_prop:file read;
+allow hal_camera_default mnt_vendor_file:file open;

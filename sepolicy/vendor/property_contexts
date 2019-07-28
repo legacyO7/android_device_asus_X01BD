@@ -26,3 +26,9 @@ persist.vendor.camera.bokeh.dumpimg           u:object_r:vendor_camera_prop:s0
 vendor.debug.camera.prop_dis                  u:object_r:vendor_camera_prop:s0
 sys.nvram.btmac                               u:object_r:nvram_btwifi_prop:s0
 sys.nvram.wifimac                             u:object_r:nvram_btwifi_prop:s0
+# HAL3
+persist.camera.HAL3.enable  u:object_r:camera_prop:s0
+
+# Power
+vendor.powerhal.state u:object_r:power_prop:s0
+vendor.powerhal.audio u:object_r:power_prop:s0

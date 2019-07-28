@@ -141,6 +141,61 @@ vendor/lib64/soundfx/libqcbassboost.so
 vendor/lib64/soundfx/libqcvirt.so
 vendor/lib64/libtinycompress_vendor.so
 
+#Audio Extra
+vendor/etc/audio/audio_policy_configuration.xml
+vendor/etc/audio_tuning_mixer_tasha.txt
+vendor/etc/audio_tuning_mixer_tavil.txt
+vendor/etc/media_codecs.xml
+vendor/etc/media_codecs_performance.xml
+vendor/etc/media_codecs_performance_sdm660_v1.xml
+vendor/etc/media_codecs_sdm660_v1.xml
+vendor/etc/media_codecs_vendor.xml
+vendor/etc/media_profiles.xml
+vendor/etc/media_profiles_V1_0.xml
+vendor/etc/media_profiles_sdm660_v1.xml
+vendor/etc/media_profiles_vendor.xml
+vendor/etc/mixer_paths_i2s.xml
+vendor/etc/mixer_paths_mtp.xml
+vendor/lib/hw/android.hardware.audio.effect@2.0-impl.so
+vendor/lib/hw/android.hardware.audio.effect@4.0-impl.so
+vendor/lib/hw/android.hardware.audio@2.0-impl.so
+vendor/lib/hw/android.hardware.audio@4.0-impl.so
+vendor/lib/hw/audio.primary.default.so
+vendor/lib/hw/audio.r_submix.default.so
+vendor/lib/hw/audio.usb.default.so
+vendor/lib/soundfx/libaudiopreprocessing.so
+vendor/lib/soundfx/libbundlewrapper.so
+vendor/lib/soundfx/libdownmix.so
+vendor/lib/soundfx/libdynproc.so
+vendor/lib/soundfx/libeffectproxy.so
+vendor/lib/soundfx/libldnhncr.so
+vendor/lib/soundfx/libqcompostprocbundle.so
+vendor/lib/soundfx/libqcomvisualizer.so
+vendor/lib/soundfx/libqcomvoiceprocessing.so
+vendor/lib/soundfx/libreverbwrapper.so
+vendor/lib/soundfx/libvisualizer.so
+vendor/lib/soundfx/libvolumelistener.so
+vendor/lib64/hw/android.hardware.audio.effect@2.0-impl.so
+vendor/lib64/hw/android.hardware.audio.effect@4.0-impl.so
+vendor/lib64/hw/android.hardware.audio@2.0-impl.so
+vendor/lib64/hw/android.hardware.audio@4.0-impl.so
+vendor/lib64/hw/audio.primary.default.so
+vendor/lib64/hw/audio.r_submix.default.so
+vendor/lib64/hw/audio.usb.default.so
+vendor/lib64/libtinycompress.so
+vendor/lib64/soundfx/libaudiopreprocessing.so
+vendor/lib64/soundfx/libbundlewrapper.so
+vendor/lib64/soundfx/libdownmix.so
+vendor/lib64/soundfx/libdynproc.so
+vendor/lib64/soundfx/libeffectproxy.so
+vendor/lib64/soundfx/libldnhncr.so
+vendor/lib64/soundfx/libqcompostprocbundle.so
+vendor/lib64/soundfx/libqcomvisualizer.so
+vendor/lib64/soundfx/libqcomvoiceprocessing.so
+vendor/lib64/soundfx/libreverbwrapper.so
+vendor/lib64/soundfx/libvisualizer.so
+vendor/lib64/soundfx/libvolumelistener.so
+
 # Alarm
 framework/vendor.qti.hardware.alarm-V1.0-java.jar:vendor/framework/vendor.qti.hardware.alarm-V1.0-java.jar
 vendor/bin/hw/vendor.qti.hardware.alarm@1.0-service
@@ -566,6 +621,8 @@ lib64/libjni_trackingfocus.so|3b56cb984f45acd6f7b22b7cede9dfb45bbaf2b2
 lib64/libmpbase.so|c8c9a6a8b6cc049e65cf13f9d8fdca3c636c7c5d
 lib64/libscene-native-lib.so|ed5ca2472df2cba4aec6bc571d95d9d8def66844
 lib64/libtensorflow_inference.so|868ac005b91eaf0b69b7cac528c69ec848fc763f
+lib64/libhqmpbase.so
+etc/permissions/privapp-permissions-org.codeaurora.snapcam.xml
 
 # Charger
 vendor/bin/hvdcp_opti

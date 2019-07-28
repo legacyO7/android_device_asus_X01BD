@@ -21,6 +21,10 @@ PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 # Default is nosdcard, S/W button enabled in resource
 PRODUCT_CHARACTERISTICS := nosdcard
 
+# apns.conf
+PRODUCT_COPY_FILES += \
+    device/asus/X01BD/apns-conf.xml:system/etc/apns-conf.xml
+
 # Permissions
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.audio.low_latency.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.audio.low_latency.xml \
@@ -136,7 +140,8 @@ PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.4-impl \
     android.hardware.camera.provider@2.4-service \
     libxml2 \
-    Snap
+    SnapdragonCamera \
+	CameraCalibration
 
 # Configstore
 PRODUCT_PACKAGES += \
@@ -333,6 +338,10 @@ PRODUCT_PACKAGES += \
     libipanat \
     liboffloadhal
 
+# ThermalController app
+PRODUCT_PACKAGES += \
+	ThermalController
+
 # Keymaster HAL
 PRODUCT_PACKAGES += \
     android.hardware.keymaster@3.0-impl \
@@ -487,5 +496,18 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/wifi/p2p_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/p2p_supplicant_overlay.conf \
     $(LOCAL_PATH)/configs/wifi/wpa_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant_overlay.conf \
     $(LOCAL_PATH)/configs/wifi/WCNSS_qcom_cfg.ini:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/WCNSS_qcom_cfg.ini
+	 
+ # Add necessary prebuilts
+PRODUCT_PACKAGES += \
+    messaging \
+    LatinIME \
+    Recorder
+	
+	
+# ZenfoneParts
+PRODUCT_PACKAGES += \
+    ZenfoneParts
+
 
 $(call inherit-product, vendor/asus/X01BD/X01BD-vendor.mk)
+

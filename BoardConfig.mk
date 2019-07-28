@@ -216,6 +216,9 @@ TARGET_USES_INTERACTION_BOOST := true
 # Peripheral manager
 TARGET_PER_MGR_ENABLED := true
 
+# Properties
+TARGET_SYSTEM_PROP := device/asus/X01BD/system.prop
+
 # QCOM hardware
 BOARD_USES_QCOM_HARDWARE := true
 
@@ -239,12 +242,13 @@ BOARD_ROOT_EXTRA_FOLDERS := bt_firmware dsp firmware persist
 BOARD_SECCOMP_POLICY := $(DEVICE_PATH)/seccomp
 
 # Security patch level
-VENDOR_SECURITY_PATCH := 2019-05-01
+VENDOR_SECURITY_PATCH := 2019-08-01
 
 # SELinux
 include device/qcom/sepolicy/sepolicy.mk
 BOARD_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
 BOARD_SEPOLICY_VERS := 28.0
+SELINUX_IGNORE_NEVERALLOWS := true
 
 # Tap to wake
 TARGET_TAP_TO_WAKE_NODE := /proc/tpd_gesture
