@@ -710,6 +710,18 @@ vendor/bin/dpmQmiMgr|0808c5a2d7b51611b3f976beb9552aabda796a41
 vendor/lib64/com.qualcomm.qti.dpm.api@1.0.so|7738cc1fdf4ce250285ed8c4130735d6cd0c598e
 vendor/lib64/libdpmqmihal.so|5d4647ac2ad8d386a44f5e9c5486287b21a7f758
 
+# DRM - Qualcomm Trusted Execution Enviornment
+vendor/bin/hw/vendor.qti.hardware.qteeconnector@1.0-service
+vendor/etc/init/vendor.qti.hardware.qteeconnector@1.0-service.rc
+vendor/lib/hw/vendor.qti.hardware.qteeconnector@1.0-impl.so
+vendor/lib/vendor.qti.hardware.qteeconnector@1.0.so
+vendor/lib64/hw/vendor.qti.hardware.qteeconnector@1.0-impl.so
+vendor/lib64/vendor.qti.hardware.qteeconnector@1.0.so
+
+# DRM - HDCP
+vendor/lib/libmm-hdcpmgr.so
+vendor/lib64/libmm-hdcpmgr.so
+
 # DRM Widevine firmware
 vendor/firmware/widevine.b02
 vendor/firmware/widevine.mdt
@@ -729,6 +741,17 @@ vendor/firmware/cppf.b05
 vendor/firmware/cppf.b06
 vendor/firmware/cppf.b07
 vendor/firmware/cppf.mdt
+
+# DRM - Widevine
+vendor/bin/hw/android.hardware.drm@1.1-service.widevine
+vendor/etc/init/android.hardware.drm@1.1-service.widevine.rc
+vendor/lib/mediadrm/libwvdrmengine.so
+vendor/lib/liboemcrypto.so
+vendor/lib64/libwvhidl.so
+vendor/lib64/mediadrm/libwvdrmengine.so
+vendor/lib64/liboemcrypto.so
+vendor/lib64/libhdcpsrm.so
+vendor/lib64/libcpion.so
 
 # DRM - from LA.UM.7.2.r1-06900-sdm660.0
 vendor/bin/qseecomd|250cedbaf62d67a025985f033bb2e55b30352ff6
@@ -1347,12 +1370,6 @@ vendor/firmware/hx_criteria.csv
 vendor/firmware/mono.cnt
 vendor/firmware/novatek_ts_fw_v8C.bin
 vendor/firmware/startup_fw_update.img
-
-# Widevine DRM
-vendor/bin/hw/android.hardware.drm@1.1-service.widevine
-vendor/etc/init/android.hardware.drm@1.1-service.widevine.rc
-vendor/lib/libwvhidl.so
-vendor/lib64/libwvhidl.so
 
 # WiFi Display - from LA.UM.7.2.r1-06900-sdm660.0
 bin/wfdservice|edeb291221024401cbae69c2fa4e58733b7efc4c
