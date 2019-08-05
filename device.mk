@@ -201,10 +201,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/keylayout/gpio-keys.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/gpio-keys.kl
 
-# Lights
-PRODUCT_PACKAGES += \
-    lights.sdm660
-
 # Manifest replacement for non NFC variant
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/bin/device_check.sh:install/bin/device_check.sh
