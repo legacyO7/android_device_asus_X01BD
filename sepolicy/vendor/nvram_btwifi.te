@@ -1,5 +1,4 @@
 type nvram_btwifi, domain;
-init_daemon_domain(nvram_btwifi)
 type nvram_btwifi_exec, exec_type, vendor_file_type, file_type;
 type nvram_btwifi_prop, property_type;
 type_transition nvram_btwifi tmpfs: file nvram_btwifi_tmpfs;
