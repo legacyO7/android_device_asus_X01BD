@@ -388,13 +388,9 @@ else
         echo 53059 > /sys/module/lowmemorykiller/parameters/vmpressure_file_min
         fi
 
-        # Disable ALMK for 3GB RAM variant and use custom minfree values
-        if [ $MemTotal -le 3145728]; then
-        	echo 0 > /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk
-        	echo "25600,34560,38400,52224,71680,84480" > /sys/module/lowmemorykiller/parameters/minfree
-        else
-        	echo 1 > /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk
-        fi
+        # Enable adaptive LMK for all targets &
+        # use Google default LMK series for all 64-bit targets >=2GB.
+        echo 0 > /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk
 
         # Enable oom_reaper
         if [ -f /sys/module/lowmemorykiller/parameters/oom_reaper ]; then
@@ -428,14 +424,9 @@ else
     fi
 
     # Set allocstall_threshold to 0 for all targets.
-    # Set swappiness according to RAM variant
-    # Set 40 for 3GB RAM variant and 10 for 4 & 6GB RAM version
+    # Set swappiness to 100 for all targets
     echo 0 > /sys/module/vmpressure/parameters/allocstall_threshold
-    if [ $MemTotal -le 3145728 ]; then
-    	echo 40 > /proc/sys/vm/swappiness
-	else
-		echo 10 > /proc/sys/vm/swappiness
-	fi
+    echo 100 > /proc/sys/vm/swappiness
 
     configure_zram_parameters
 
@@ -4375,12 +4366,3 @@ esac
 misc_link=$(ls -l /dev/block/bootdevice/by-name/misc)
 real_path=${misc_link##*>}
 setprop persist.vendor.mmi.misc_dev_path $real_path
-
-# set sys.use_fifo_ui prop if eas exist
-	available_governors=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors)
-
-	if echo "$available_governors" | grep schedutil; then
-	  echo "schedutil" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-	  echo "schedutil" > /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor
-	  setprop sys.use_fifo_ui 1
-	fi
