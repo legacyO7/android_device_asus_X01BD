@@ -23,6 +23,10 @@ import android.support.v14.preference.PreferenceFragment;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceCategory;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 import com.asus.zenparts.kcal.KCalSettingsActivity;
 import com.asus.zenparts.preferences.SecureSettingCustomSeekBarPreference;
 import com.asus.zenparts.preferences.SecureSettingListPreference;
@@ -49,8 +53,8 @@ public class DeviceSettings extends PreferenceFragment implements
     private static final String CATEGORY_DISPLAY = "display";
     private static final String PREF_DEVICE_KCAL = "device_kcal";
 
-    final static String PREF_HEADPHONE_GAIN = "selinuxswitch";
-	final static String PREF_SEL = "headphone_gain";
+    final static String PREF_HEADPHONE_GAIN = "headphone_gain";
+	final static String PREF_SEL = "selinuxswitch";
     private static final String HEADPHONE_GAIN_PATH = "/sys/kernel/sound_control/headphone_gain";
     final static String PREF_MICROPHONE_GAIN = "microphone_gain";
     private static final String MICROPHONE_GAIN_PATH = "/sys/kernel/sound_control/mic_gain";
@@ -146,23 +150,16 @@ public class DeviceSettings extends PreferenceFragment implements
     }
 	
 	void setselinux(boolean checked){
-	  if (runcommand("su -c 'getenforce'").contains("Enforcing")) {
+	  if (runcommand("su -c 'getenforce'").contains("Enforcing")) 
             mSelinux.setChecked(true);
-        }
-
-        mSelinux.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
+        
                 if (runcommand("su -c 'getenforce'").contains("Enforcing")) {          
                     runcommand("su -c " + '"' + '"' + "setenforce 0" + '"' + '"');
                     mSelinux.setChecked(false);
                 } else {                   
                     runcommand("su -c " + '"' + '"' + "setenforce 1" + '"' + '"');
                     mSelinux.setChecked(true);
-                }               
-            }
-        });
+                }                  
 	
 	}
 	
