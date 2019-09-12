@@ -49,7 +49,8 @@ public class DeviceSettings extends PreferenceFragment implements
     private static final String CATEGORY_DISPLAY = "display";
     private static final String PREF_DEVICE_KCAL = "device_kcal";
 
-    final static String PREF_HEADPHONE_GAIN = "headphone_gain";
+    final static String PREF_HEADPHONE_GAIN = "selinuxswitch";
+	final static String PREF_SEL = "headphone_gain";
     private static final String HEADPHONE_GAIN_PATH = "/sys/kernel/sound_control/headphone_gain";
     final static String PREF_MICROPHONE_GAIN = "microphone_gain";
     private static final String MICROPHONE_GAIN_PATH = "/sys/kernel/sound_control/mic_gain";
@@ -63,6 +64,7 @@ public class DeviceSettings extends PreferenceFragment implements
    
     private SecureSettingCustomSeekBarPreference mHeadphoneGain;
     private SecureSettingCustomSeekBarPreference mMicrophoneGain;
+	private SecureSettingSwitchPreference mSelinux;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -90,7 +92,9 @@ public class DeviceSettings extends PreferenceFragment implements
         });
 
       
-    
+        mSelinux = (SecureSettingSwitchPreference) findPreference(PREF_SEL);
+		mSelinux.setOnPreferenceChangeListener(this);
+		
         mHeadphoneGain = (SecureSettingCustomSeekBarPreference) findPreference(PREF_HEADPHONE_GAIN);
         mHeadphoneGain.setOnPreferenceChangeListener(this);
 
@@ -120,6 +124,10 @@ public class DeviceSettings extends PreferenceFragment implements
             case PREF_MICROPHONE_GAIN:
                 FileUtils.setValue(MICROPHONE_GAIN_PATH, (int) value);
                 break;
+				
+			 case PREF_SEL:
+                setselinux((boolean) value);
+                break;
 
             default:
                 break;
@@ -136,4 +144,48 @@ public class DeviceSettings extends PreferenceFragment implements
             return true;
         }
     }
+	
+	void setselinux(boolean checked){
+	  if (runcommand("su -c 'getenforce'").contains("Enforcing")) {
+            mSelinux.setChecked(true);
+        }
+
+        mSelinux.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (runcommand("su -c 'getenforce'").contains("Enforcing")) {          
+                    runcommand("su -c " + '"' + '"' + "setenforce 0" + '"' + '"');
+                    mSelinux.setChecked(false);
+                } else {                   
+                    runcommand("su -c " + '"' + '"' + "setenforce 1" + '"' + '"');
+                    mSelinux.setChecked(true);
+                }               
+            }
+        });
+	
+	}
+	
+	  public String runcommand(String command) {
+        StringBuilder log = new StringBuilder();
+        try {
+            Process process = Runtime.getRuntime().exec(command);
+            process.waitFor();
+            BufferedReader bufferedReader = new BufferedReader(
+                    new InputStreamReader(process.getInputStream()));
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                log.append(line).append("\n");
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return log.toString();
+
+    }
+	
+	
 }

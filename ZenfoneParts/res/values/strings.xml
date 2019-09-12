@@ -18,6 +18,9 @@
     <string name="advanced_settings_summary">Device Specific Customisations</string>
 
     <string name="display_title">Display</string>
+	<string name="selinux">Selinux Switch</string>
+	<string name="enfselinux">Enforce Selinux</string>
+	<string name="audio_title">Audio</string>
 
     <!-- KCal -->
     <string name="device_kcal_title">Display Color Calibration</string>

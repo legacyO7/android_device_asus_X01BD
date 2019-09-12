@@ -21,6 +21,8 @@ import android.os.SystemProperties;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 class FileUtils {
 
@@ -51,6 +53,17 @@ class FileUtils {
         }
     }
 
+	 static void runcommand (String command){
+        try {
+            Process process = Runtime.getRuntime().exec(command);
+            BufferedReader bufferedReader = new BufferedReader(
+                    new InputStreamReader(process.getInputStream()));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+	
     static void setValue(String path, double value) {
         if (fileWritable(path)) {
             if (path == null) {

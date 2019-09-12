@@ -60,10 +60,20 @@
         </Preference>
     </PreferenceCategory>
 
+	<PreferenceCategory
+        android:key="selinux"
+        android:title="@string/selinux">
+		
+		<com.asus.zenparts.preferences.SecureSettingSwitchPreference
+        android:defaultValue="false"    
+        android:key="selinuxswitch"
+        android:title="@string/enfselinux" />
+		
+    </PreferenceCategory>
 
     <PreferenceCategory
         android:key="audio"
-        android:title="Audio">
+        android:title="@string/audio_title">
 
         <com.asus.zenparts.preferences.SecureSettingCustomSeekBarPreference
             android:defaultValue="4"
