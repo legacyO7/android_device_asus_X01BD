@@ -64,7 +64,8 @@
         android:key="selinux"
         android:title="@string/selinux">
 		
-		<com.asus.zenparts.preferences.SecureSettingSwitchPreference    
+		<com.asus.zenparts.preferences.SecureSettingSwitchPreference
+        android:defaultValue="false"    
         android:key="selinuxswitch"
         android:title="@string/enfselinux" 
 		android:summary="@string/sel_summary"

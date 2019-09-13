@@ -104,19 +104,6 @@ public class DeviceSettings extends PreferenceFragment implements
 
         mMicrophoneGain = (SecureSettingCustomSeekBarPreference) findPreference(PREF_MICROPHONE_GAIN);
         mMicrophoneGain.setOnPreferenceChangeListener(this);
-		
-		 if (runcommand("su -c 'getenforce'").equals(""))
-        {        
-            mSelinux.setVisibility(View.INVISIBLE);
-        }
-		else
-		{
-		 if (runcommand("su -c 'getenforce'").contains("Enforcing")) 
-            mSelinux.setChecked(true);
-		}
-
-		
-		
     }
 
     @Override

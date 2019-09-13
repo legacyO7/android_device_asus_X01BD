@@ -16,7 +16,7 @@
 <resources>
     <string name="advanced_settings">Zenfone Parts</string>
     <string name="advanced_settings_summary">Device Specific Customisations</string>
-	 <string name="sel_summary">Requires Rooted and Enforcing build</string>
+	 <string name="sel_summary">Requires Root</string>
 
     <string name="display_title">Display</string>
 	<string name="selinux">Selinux Switch</string>
