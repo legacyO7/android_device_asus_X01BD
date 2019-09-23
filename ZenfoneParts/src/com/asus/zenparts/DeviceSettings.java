@@ -23,10 +23,6 @@ import android.support.v14.preference.PreferenceFragment;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceCategory;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 import com.asus.zenparts.kcal.KCalSettingsActivity;
 import com.asus.zenparts.preferences.SecureSettingCustomSeekBarPreference;
 import com.asus.zenparts.preferences.SecureSettingListPreference;
@@ -45,6 +41,9 @@ public class DeviceSettings extends PreferenceFragment implements
 
     final static String PREF_VIBRATION_STRENGTH = "vibration_strength";
     private final static String VIBRATION_STRENGTH_PATH = "/sys/devices/virtual/timed_output/vibrator/vtg_level";
+	
+    public static final String PREF_BACKLIGHT_DIMMER = "backlight_dimmer";
+    public static final String BACKLIGHT_DIMMER_PATH = "/sys/module/mdss_fb/parameters/backlight_dimmer";
 
     // value of vtg_min and vtg_max
     final static int MIN_VIBRATION = 116;
@@ -69,6 +68,7 @@ public class DeviceSettings extends PreferenceFragment implements
     private SecureSettingCustomSeekBarPreference mHeadphoneGain;
     private SecureSettingCustomSeekBarPreference mMicrophoneGain;
 	private SecureSettingSwitchPreference mSelinux;
+	private SecureSettingSwitchPreference mBacklightDimmer;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -84,6 +84,15 @@ public class DeviceSettings extends PreferenceFragment implements
         mVibrationStrength = (VibrationSeekBarPreference) findPreference(PREF_VIBRATION_STRENGTH);
         mVibrationStrength.setEnabled(FileUtils.fileWritable(VIBRATION_STRENGTH_PATH));
         mVibrationStrength.setOnPreferenceChangeListener(this);
+		
+		  if (FileUtils.fileWritable(BACKLIGHT_DIMMER_PATH)) {
+            mBacklightDimmer = (SecureSettingSwitchPreference) findPreference(PREF_BACKLIGHT_DIMMER);
+            mBacklightDimmer.setChecked(FileUtils.getFileValueAsBoolean(BACKLIGHT_DIMMER_PATH, false));
+            mBacklightDimmer.setOnPreferenceChangeListener(this);
+        } else {
+            getPreferenceScreen().removePreference(findPreference(PREF_BACKLIGHT_DIMMER));
+        }
+
 
         PreferenceCategory displayCategory = (PreferenceCategory) findPreference(CATEGORY_DISPLAY);
 
@@ -96,9 +105,14 @@ public class DeviceSettings extends PreferenceFragment implements
         });
 
       
+	     if (!FileUtils.runcommand("su -c 'getenforce'").equals(""))  {  
         mSelinux = (SecureSettingSwitchPreference) findPreference(PREF_SEL);
+		mSelinux.setChecked(FileUtils.getAsBoolean(false));		
 		mSelinux.setOnPreferenceChangeListener(this);
-		
+	     } else {
+            getPreferenceScreen().removePreference(findPreference(PREF_SEL));
+        }
+	  	
         mHeadphoneGain = (SecureSettingCustomSeekBarPreference) findPreference(PREF_HEADPHONE_GAIN);
         mHeadphoneGain.setOnPreferenceChangeListener(this);
 
@@ -130,7 +144,11 @@ public class DeviceSettings extends PreferenceFragment implements
                 break;
 				
 			 case PREF_SEL:
-                setselinux((boolean) value);
+                FileUtils.setselinux((boolean) value);
+                break;
+				
+			case PREF_BACKLIGHT_DIMMER:
+                FileUtils.setValue(BACKLIGHT_DIMMER_PATH, (boolean) value);
                 break;
 
             default:
@@ -147,41 +165,6 @@ public class DeviceSettings extends PreferenceFragment implements
         } catch (PackageManager.NameNotFoundException e) {
             return true;
         }
-    }
-	
-	void setselinux(boolean checked){
-	  if (runcommand("su -c 'getenforce'").contains("Enforcing")) 
-            mSelinux.setChecked(true);
-        
-                if (runcommand("su -c 'getenforce'").contains("Enforcing")) {          
-                    runcommand("su -c " + '"' + '"' + "setenforce 0" + '"' + '"');
-                    mSelinux.setChecked(false);
-                } else {                   
-                    runcommand("su -c " + '"' + '"' + "setenforce 1" + '"' + '"');
-                    mSelinux.setChecked(true);
-                }                  
-	
-	}
-	
-	  public String runcommand(String command) {
-        StringBuilder log = new StringBuilder();
-        try {
-            Process process = Runtime.getRuntime().exec(command);
-            process.waitFor();
-            BufferedReader bufferedReader = new BufferedReader(
-                    new InputStreamReader(process.getInputStream()));
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                log.append(line).append("\n");
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return log.toString();
-
     }
 	
 	

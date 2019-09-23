@@ -16,12 +16,16 @@
 <resources>
     <string name="advanced_settings">Zenfone Parts</string>
     <string name="advanced_settings_summary">Device Specific Customisations</string>
-	<string name="sel_summary">Requires Rooted and Enforcing build</string>
+	<string name="sel_summary">Toggle SE-Linux</string>
 
     <string name="display_title">Display</string>
 	<string name="selinux">Selinux Switch</string>
-	<string name="enfselinux">Toggle Selinux</string>
+	<string name="enfselinux">Enforce Selinux</string>
 	<string name="audio_title">Audio</string>
+	
+	 <!-- Backlight Dimmer -->
+    <string name="backlight_dimmer">Backlight Dimmer</string>
+    <string name="backlight_summary">Dim the display to the minimum value</string>
 
     <!-- KCal -->
     <string name="device_kcal_title">Display Color Calibration</string>

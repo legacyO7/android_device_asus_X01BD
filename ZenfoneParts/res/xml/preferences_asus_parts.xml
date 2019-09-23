@@ -58,14 +58,22 @@
                 android:targetClass="org.lineageos.settings.kcal.KCalSettingsActivity"
                 android:targetPackage="org.lineageos.settings.kcal" />
         </Preference>
+		
+		
+        <com.asus.zenparts.preferences.SecureSettingSwitchPreference
+            android:defaultValue="false"
+            android:key="backlight_dimmer"
+            android:icon="@drawable/ic_backlight"
+            android:title="@string/backlight_dimmer"
+            android:summary="@string/backlight_summary" />
+			
     </PreferenceCategory>
 
 	<PreferenceCategory
         android:key="selinux"
         android:title="@string/selinux">
 		
-		<com.asus.zenparts.preferences.SecureSettingSwitchPreference
-        android:defaultValue="false"    
+		<com.asus.zenparts.preferences.SecureSettingSwitchPreference    
         android:key="selinuxswitch"
         android:title="@string/enfselinux" 
 		android:summary="@string/sel_summary"
