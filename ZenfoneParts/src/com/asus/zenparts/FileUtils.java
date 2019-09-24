@@ -70,6 +70,22 @@ class FileUtils {
             }
         }
     }
+	
+	 static void setValue(String path, boolean value) {
+        if (fileWritable(path)) {
+            if (path == null) {
+                return;
+            }
+            try {
+                FileOutputStream fos = new FileOutputStream(new File(path));
+                fos.write((value ? "Y" : "N").getBytes());
+                fos.flush();
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     static void setValue(String path, String value) {
         if (fileWritable(path)) {
