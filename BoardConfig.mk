@@ -200,5 +200,13 @@ WIFI_DRIVER_FW_PATH_P2P := "p2p"
 WPA_SUPPLICANT_VERSION := VER_0_8_X
 WIFI_HIDL_FEATURE_DUAL_INTERFACE := true
 
-# inherit from the proprietary version
-include vendor/asus/X01BD/BoardConfigVendor.mk
+
+# Wireguard
+BUILD_BROKEN_USES_NETWORK := true
+
+# Vendor init
+TARGET_INIT_VENDOR_LIB := libinit_X01BD
+TARGET_RECOVERY_DEVICE_MODULES := libinit_X01BD
+
+# Inherit from the proprietary version
+-include vendor/asus/X01BD/BoardConfigVendor.mk
