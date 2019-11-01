@@ -105,9 +105,9 @@ public class DeviceSettings extends PreferenceFragment implements
         });
 
       
-	     if (!FileUtils.runcommand("su -c 'getenforce'").equals(""))  {  
+	     if (!runcommand("su -c 'getenforce'").equals(""))  {  
         mSelinux = (SecureSettingSwitchPreference) findPreference(PREF_SEL);
-		mSelinux.setChecked(FileUtils.getAsBoolean(false));		
+		mSelinux.setChecked(getAsBoolean(false));		
 		mSelinux.setOnPreferenceChangeListener(this);
 	     } else {
             getPreferenceScreen().removePreference(findPreference(PREF_SEL));
@@ -144,7 +144,7 @@ public class DeviceSettings extends PreferenceFragment implements
                 break;
 				
 			 case PREF_SEL:
-                FileUtils.setselinux((boolean) value);
+                setselinux((boolean) value);
                 break;
 				
 			case PREF_BACKLIGHT_DIMMER:
@@ -165,6 +165,46 @@ public class DeviceSettings extends PreferenceFragment implements
         } catch (PackageManager.NameNotFoundException e) {
             return true;
         }
+    }
+	
+	void setselinux(boolean checked){
+       
+                if (runcommand("su -c 'getenforce'").contains("Enforcing")) {          
+                    runcommand("su -c " + '"' + '"' + "setenforce 0" + '"' + '"');
+                     return false;
+                } else {                   
+                    runcommand("su -c " + '"' + '"' + "setenforce 1" + '"' + '"');
+                     return true;
+                }                  
+	
+	}
+	
+	  public String runcommand(String command) {
+        StringBuilder log = new StringBuilder();
+        try {
+            Process process = Runtime.getRuntime().exec(command);
+            process.waitFor();
+            BufferedReader bufferedReader = new BufferedReader(
+                    new InputStreamReader(process.getInputStream()));
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                log.append(line).append("\n");
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return log.toString();
+
+    }
+	
+	 static boolean getAsBoolean(boolean defValue) {
+          if (runcommand("su -c 'getenforce'").contains("Enforcing")) 
+            return true;
+			else 
+           return defValue;
     }
 	
 	

@@ -111,13 +111,6 @@ class FileUtils {
         return defValue;
     }
 	
-	 static boolean getAsBoolean(boolean defValue) {
-          if (runcommand("su -c 'getenforce'").contains("Enforcing")) 
-            return true;
-			else 
-           return defValue;
-    }
-	
     static void setProp(String prop, boolean value) {
         if (value) {
             SystemProperties.set(prop, "1");
@@ -137,37 +130,5 @@ class FileUtils {
     static String getStringProp(String prop, String defaultValue) {
         return SystemProperties.get(prop, defaultValue);
     }
-	
-	void setselinux(boolean checked){
-       
-                if (runcommand("su -c 'getenforce'").contains("Enforcing")) {          
-                    runcommand("su -c " + '"' + '"' + "setenforce 0" + '"' + '"');
-                     return false;
-                } else {                   
-                    runcommand("su -c " + '"' + '"' + "setenforce 1" + '"' + '"');
-                     return true;
-                }                  
-	
-	}
-	
-	  public String runcommand(String command) {
-        StringBuilder log = new StringBuilder();
-        try {
-            Process process = Runtime.getRuntime().exec(command);
-            process.waitFor();
-            BufferedReader bufferedReader = new BufferedReader(
-                    new InputStreamReader(process.getInputStream()));
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                log.append(line).append("\n");
-            }
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return log.toString();
-
-    }
 }
