@@ -372,6 +372,11 @@ on post-fs-data
     mkdir /data/vendor/focaltech 0760 system system
     restorecon /data/vendor/focaltech
 
+    start vendor.qcrild
+    start vendor.qcrild2
+    start vendor.dataqti
+    start vendor.dataadpl
+
 service nvram_btwifi /system/bin/nvram_btwifi
     user root
     group system oem_2901
@@ -439,14 +444,7 @@ on property:persist.vendor.radio.atfwd.start=false
 on property:vendor.radio.atfwd.start=false
     stop vendor.atfwd
 
-service qcom-c_main-sh /vendor/bin/init.class_main.sh
-    class main
-    user root
-    group root system
-    oneshot
-
 on property:vold.decrypt=trigger_restart_framework
-    start qcom-c_main-sh
     restart vendor.camera-provider-2-4
     restart vendor.audio-hal-2-0
     start wcnss-service
@@ -543,7 +541,6 @@ service vendor.msm_irqbalance /vendor/bin/msm_irqbalance -f /vendor/etc/msm_irqb
     class core
     user root
     group root
-    disabled
 
 on charger
     setprop persist.sys.usb.config mass_storage

@@ -227,7 +227,6 @@ service vendor.cdsprpcd /vendor/bin/cdsprpcd
    class main
    user system
    group system
-   disabled
 
 service energy-awareness /vendor/bin/energy-awareness
     class main
