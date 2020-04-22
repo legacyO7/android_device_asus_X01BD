@@ -334,12 +334,10 @@ PRODUCT_PACKAGES += \
     init.btmac.sh \
     init.qcom.post_boot.sh \
     init.qcom.sh \
-    init.qcom.usb.sh \
     init.wlan.sh
 
 PRODUCT_PACKAGES += \
     fstab.qcom \
-    init.msm.usb.configfs.rc \
     init.qcom.rc \
     init.qcom.usb.rc \
     init.safailnet.rc \
