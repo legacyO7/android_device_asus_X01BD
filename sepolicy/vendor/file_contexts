@@ -17,7 +17,6 @@
 
 # Scripts
 /(vendor|system/vendor)/bin/init\.btmac\.sh                                   u:object_r:init_blutmac_exec:s0
-/(vendor|system/vendor)/bin/init\.wlan\.sh                                    u:object_r:qti_init_shell_exec:s0
 
 # Touch
 /(vendor|system/vendor)/bin/hw/vendor\.lineage\.touch@1\.0-service\.asus      u:object_r:hal_lineage_touch_default_exec:s0

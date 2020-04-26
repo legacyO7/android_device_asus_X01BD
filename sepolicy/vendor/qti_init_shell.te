@@ -1,3 +1,0 @@
-# Allow qti_init_shell to fully access wlan_mac.bin persist file
-allow qti_init_shell mnt_vendor_file:dir rw_dir_perms;
-allow qti_init_shell mnt_vendor_file:file create_file_perms;

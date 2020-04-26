@@ -333,8 +333,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     init.btmac.sh \
     init.qcom.post_boot.sh \
-    init.qcom.sh \
-    init.wlan.sh
+    init.qcom.sh
 
 PRODUCT_PACKAGES += \
     fstab.qcom \
