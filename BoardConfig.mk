@@ -159,7 +159,6 @@ TARGET_VENDOR_PROP += $(DEVICE_PATH)/vendor.prop
 # Power
 TARGET_USES_INTERACTION_BOOST := true
 TARGET_TAP_TO_WAKE_NODE := "/proc/tpd_gesture"
-TARGET_HAS_NO_WLAN_STATS := true
 
 # QCOM hardware
 BOARD_USES_QCOM_HARDWARE := true
