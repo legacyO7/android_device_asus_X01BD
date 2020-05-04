@@ -26,6 +26,10 @@ vendor/lib64/libcdsprpc.so|35d6590f6ddc0f306f48558ae8e71aa0b57625b7
 vendor/lib64/libcdsp_default_listener.so|886ba3921f81439cb1b4e520ad622e1089291fa7
 vendor/lib64/libsysmon_cdsp_skel.so|40d3511922c744016c419983b18f97952c23fee5
 
+# ADSP Modules
+vendor/lib/rfsa/adsp/capi_v2_aptX_Classic.so
+vendor/lib/rfsa/adsp/capi_v2_aptX_HD.so
+
 # ADSP Modules - from LA.UM.8.2.r1-06200-sdm660.0
 vendor/lib/rfsa/adsp/libadsp_fd_skel.so|677d2932dac248049f031fc5893163e22b49439a
 vendor/lib/rfsa/adsp/libadsp_hvx_add_constant.so|26fb64a92d48e801a31a867976d325efa366a255
@@ -86,6 +90,10 @@ vendor/lib64/soundfx/libasphere.so|27154ce2eed6902f36ed8c85324cf61c96c8af02
 vendor/lib64/soundfx/libqcbassboost.so|b1d0197cd7f59e2d5e679efa2f85ee76558f6e5a
 vendor/lib64/soundfx/libqcreverb.so|63424b348f7b246d3316c864b9dd8145875e8778
 vendor/lib64/soundfx/libqcvirt.so|eb23489165f6930a87e0be4a4df6321cd8c892f0
+
+# Bluetooth aptX
+lib64/libaptX_encoder.so
+lib64/libaptXHD_encoder.so
 
 # Bluetooth - from LA.UM.8.2.r1-06200-sdm660.0
 vendor/bin/hw/android.hardware.bluetooth@1.0-service-qti|5acf94f38e47c2ec43c95e132dfe7b5d71ec41c4
