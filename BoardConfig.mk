@@ -52,7 +52,7 @@ BOARD_KERNEL_TAGS_OFFSET := 0x00000100
 BOARD_RAMDISK_OFFSET     := 0x01000000
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
 TARGET_KERNEL_SOURCE := kernel/asus/sdm660
-TARGET_KERNEL_CONFIG := X01BD_defconfig
+TARGET_KERNEL_CONFIG := katnis_defconfig
 TARGET_KERNEL_CLANG_COMPILE := true
 
 # Treble
@@ -179,7 +179,7 @@ ENABLE_VENDOR_RIL_SERVICE := true
 BOARD_SECCOMP_POLICY := $(DEVICE_PATH)/seccomp
 
 # Security patch level
-VENDOR_SECURITY_PATCH := 2019-12-05
+VENDOR_SECURITY_PATCH := 2020-05-05
 
 # SELinux
 include device/qcom/sepolicy-legacy-um/sepolicy.mk
