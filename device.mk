@@ -84,6 +84,7 @@ PRODUCT_PACKAGES += \
     audio.r_submix.default \
     audio.usb.default \
     libaudio-resampler \
+    libaudioroute \
     libqcompostprocbundle \
     libqcomvisualizer \
     libqcomvoiceprocessing \
@@ -91,9 +92,11 @@ PRODUCT_PACKAGES += \
     tinymix
 
 PRODUCT_PACKAGES += \
-    libsndmonitor \
     libhdmiedid \
-    libhfp
+    libhfp \
+    libsndmonitor \
+    libspkrprot \
+    libssrec
 
 # Audio Configs
 PRODUCT_COPY_FILES += \
