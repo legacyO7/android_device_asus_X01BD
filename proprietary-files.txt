@@ -21,7 +21,7 @@ vendor/etc/acdbdata/QRD/NonCE/QRD_NonCE_Handset_cal.acdb
 vendor/firmware/tfa98xx.cnt
 
 # Camera - WW_Phone-17.2018.1912.409-20200114
-vendor/lib/hw/camera.sdm660.so
+vendor/lib/hw/camera.sdm660.so|a29fb8936d1d7d1ee14ccd5f3097f730cb127e54
 vendor/lib/libarcsoft_beautyshot.so
 vendor/lib/libarcsoft_dualcam_refocus.so
 vendor/lib/libarcsoft_hdr_detection.so
