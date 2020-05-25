@@ -1,4 +1,4 @@
-# Audio ACDB - WW_Phone-17.2018.1912.409-20200114
+# Audio ACDB
 vendor/etc/acdbdata/adsp_avs_config.acdb
 vendor/etc/acdbdata/QRD/QRD_Hdmi_cal.acdb
 vendor/etc/acdbdata/QRD/QRD_Global_cal.acdb
@@ -17,11 +17,12 @@ vendor/etc/acdbdata/QRD/NonCE/QRD_NonCE_workspaceFile.qwsp
 vendor/etc/acdbdata/QRD/NonCE/QRD_NonCE_Headset_cal.acdb
 vendor/etc/acdbdata/QRD/NonCE/QRD_NonCE_Handset_cal.acdb
 
-# Audio firmware - WW_Phone-16.2017.2002.073-20200219
+# Audio firmware
 vendor/firmware/tfa98xx.cnt
 
-# Camera - WW_Phone-17.2018.1912.409-20200114
-vendor/lib/hw/camera.sdm660.so|a29fb8936d1d7d1ee14ccd5f3097f730cb127e54
+# Camera
+vendor/lib/hw/camera.sdm660.so|8839bbee3ede084ac3084555ac74bf07720f5e65
+vendor/lib/dualcali_dump.bin
 vendor/lib/libarcsoft_beautyshot.so
 vendor/lib/libarcsoft_dualcam_refocus.so
 vendor/lib/libarcsoft_hdr_detection.so
@@ -98,6 +99,7 @@ vendor/lib/libmmjpeg_interface.so
 vendor/lib/libmmlib2d_interface.so
 vendor/lib/libmmqjpeg_codec.so
 vendor/lib/libmmqjpegdma.so
+vendor/lib/libmorpho_video_refiner.so
 vendor/lib/libmpbase.so
 vendor/lib/libqomx_core.so
 vendor/lib/libqomx_jpegdec.so
@@ -141,10 +143,10 @@ vendor/lib64/libscvePanorama.so
 vendor/lib64/libscvePanorama_lite.so
 vendor/lib64/libvideoutils.so
 
-# Camera Actuator - WW_Phone-17.2018.1912.409-20200114
+# Camera Actuator
 vendor/lib/libactuator_imx486_holitech_12m.so
 
-# Camera Chromatix - WW_Phone-17.2018.1912.409-20200114
+# Camera Chromatix
 vendor/lib/libchromatix_csidtg_common.so
 vendor/lib/libchromatix_csidtg_cpp_preview.so
 vendor/lib/libchromatix_csidtg_postproc.so
@@ -235,16 +237,16 @@ vendor/lib/libchromatix_ov13855_video_full.so
 vendor/lib/libchromatix_ov13855_zsl_preview_bu64297.so
 vendor/lib/libchromatix_ov13855_zsl_video_bu64297.so
 
-# Camera configs - WW_Phone-17.2018.1912.409-20200114
+# Camera configs
 vendor/etc/camera/camera_config.xml
 vendor/etc/camera/gc5025_ofilm_13m_chromatix.xml
 vendor/etc/camera/imx486_chromatix.xml
 vendor/etc/camera/ov13855_chromatix.xml
 
-# Camera firmware - WW_Phone-17.2018.1912.409-20200114
+# Camera firmware
 vendor/firmware/cpp_firmware_v1_12_0.fw
 
-# Camera ISP - WW_Phone-17.2018.1912.409-20200114
+# Camera ISP
 vendor/lib/libmmcamera_isp_abf48.so
 vendor/lib/libmmcamera_isp_aec_bg_stats47.so
 vendor/lib/libmmcamera_isp_bf_stats47.so
@@ -321,7 +323,7 @@ vendor/firmware/cppf.b06
 vendor/firmware/cppf.b07
 vendor/firmware/cppf.mdt
 
-# Fingerprint - WW_Phone-17.2018.1912.409-20200114
+# Fingerprint
 product/framework/vendor.qti.hardware.fingerprint-V1.0-java.jar
 product/etc/permissions/qti_fingerprint_interface.xml
 vendor/bin/hw/android.hardware.biometrics.fingerprint@2.1-service_asus
@@ -331,7 +333,7 @@ vendor/lib64/hw/cdfinger.fingerprint.default.so
 vendor/lib64/hw/fingerprint.focaltech.default.so
 vendor/lib64/vendor.qti.hardware.fingerprint@1.0.so
 
-# GPU firmware - from WW_Phone-17.2018.1912.409-20200114
+# GPU firmware
 vendor/firmware/a512_zap.b00
 vendor/firmware/a512_zap.b01
 vendor/firmware/a512_zap.b02
@@ -347,7 +349,7 @@ vendor/firmware/libpn553_fw.so:vendor/lib/libpn553_fw.so
 bin/nvram_btwifi
 lib64/libmmi.so|e3c16694406d6bc77c70f04f0d979ca4e65498d5
 
-# Sensors - from WW_Phone-17.2018.1912.409-20200114
+# Sensors
 vendor/bin/sensors.qti
 vendor/etc/sensors/sensor_def_qcomdev.conf
 vendor/lib/hw/activity_recognition.sdm660.so
