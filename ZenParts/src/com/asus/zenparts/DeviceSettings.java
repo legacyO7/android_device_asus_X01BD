@@ -1,3 +1,4 @@
+
 /*
  * Copyright (C) 2018 The Asus-SDM660 Project
  *
@@ -29,6 +30,10 @@ import com.asus.zenparts.preferences.SecureSettingListPreference;
 import com.asus.zenparts.preferences.SecureSettingSwitchPreference;
 import com.asus.zenparts.preferences.VibratorStrengthPreference;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class DeviceSettings extends PreferenceFragment implements
         Preference.OnPreferenceChangeListener {
 
@@ -41,6 +46,9 @@ public class DeviceSettings extends PreferenceFragment implements
     public static final String KEY_VIBSTRENGTH = "vib_strength";
 
     public static final String PREF_HEADPHONE_GAIN = "headphone_gain";
+    public static final String PREF_SELINUX = "selinux";
+    public static final String CATAGORY_SELINUX = "toggleselinux";
+   
     public static final String HEADPHONE_GAIN_PATH = "/sys/kernel/sound_control/headphone_gain";
     public static final String PREF_MICROPHONE_GAIN = "microphone_gain";
     public static final String MICROPHONE_GAIN_PATH = "/sys/kernel/sound_control/mic_gain";
@@ -50,6 +58,7 @@ public class DeviceSettings extends PreferenceFragment implements
     private SecureSettingListPreference mHeadsetType;
     private CustomSeekBarPreference mHeadphoneGain;
     private CustomSeekBarPreference mMicrophoneGain;
+    private SecureSettingSwitchPreference mSelinux;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -68,7 +77,15 @@ public class DeviceSettings extends PreferenceFragment implements
         }
 
         boolean enhancerEnabled;
-    
+
+        if (runcommand("su -c 'getenforce'").equals("")) {
+            getPreferenceScreen().removePreference(findPreference(CATAGORY_SELINUX));
+        } else {        
+         mSelinux = (SecureSettingSwitchPreference) findPreference(PREF_SELINUX);
+            mSelinux.setChecked(runcommand("su -c 'getenforce'").contains("Enforcing"));           
+        }
+
+
         mHeadphoneGain = (CustomSeekBarPreference) findPreference(PREF_HEADPHONE_GAIN);
         mHeadphoneGain.setOnPreferenceChangeListener(this);
 
@@ -94,6 +111,14 @@ public class DeviceSettings extends PreferenceFragment implements
                 FileUtils.setValue(MICROPHONE_GAIN_PATH, (int) value);
                 break;
 
+            case PREF_SELINUX:
+                if(runcommand("su -c 'getenforce'").contains("Enforcing"))
+                 runcommand("su -c " + '"' + '"' + "setenforce 0" + '"' + '"');
+                else
+                 runcommand("su -c " + '"' + '"' + "setenforce 1" + '"' + '"');
+                 mSelinux.setChecked(runcommand("su -c 'getenforce'").contains("Enforcing"));    
+                break;
+
             default:
                 break;
         }
@@ -108,5 +133,25 @@ public class DeviceSettings extends PreferenceFragment implements
         } catch (PackageManager.NameNotFoundException e) {
             return true;
         }
+    }
+
+    public String runcommand(String command) {
+        StringBuilder log = new StringBuilder();
+        try {
+            Process process = Runtime.getRuntime().exec(command);
+            process.waitFor();
+            BufferedReader bufferedReader = new BufferedReader(
+                    new InputStreamReader(process.getInputStream()));
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                log.append(line).append("\n");
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return log.toString();
     }
 }

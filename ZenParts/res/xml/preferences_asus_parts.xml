@@ -40,6 +40,18 @@
             android:title="Vibration Strength" />
 
     </PreferenceCategory>
+    
+     <PreferenceCategory
+        android:key="toggleselinux"
+        android:title="Toggle Selinux">
+
+        <com.asus.zenparts.preferences.SecureSettingSwitchPreference
+            android:defaultValue="false"
+            android:key="selinux"
+            android:title="Toggle Selinux"
+            android:summary="toggle selinux status" />
+
+    </PreferenceCategory>
 
 
     <PreferenceCategory
