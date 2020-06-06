@@ -1,5 +1,6 @@
 /*
- *   Copyright (c) 2020 Evolution-X Project
+   Copyright (c) 2016, The CyanogenMod Project
+   Copyright (c) 2019, The LineageOS Project
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are
@@ -27,37 +28,85 @@
    IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <stdlib.h>
+#include <cstdlib>
+#include <fstream>
+#include <string.h>
+#include <sys/sysinfo.h>
+#include <unistd.h>
+
 #include <android-base/properties.h>
 #define _REALLY_INCLUDE_SYS__SYSTEM_PROPERTIES_H_
 #include <sys/_system_properties.h>
-#include <stdio.h>
-#include <sys/system_properties.h>
 
 #include "vendor_init.h"
 #include "property_service.h"
 
 using android::base::GetProperty;
+using android::init::property_set;
 
-void property_override(char const prop[], char const value[])
+char const *heapstartsize;
+char const *heapgrowthlimit;
+char const *heapsize;
+char const *heapminfree;
+char const *heapmaxfree;
+char const *heaptargetutilization;
+
+void check_device()
 {
-	prop_info *pi;
+    struct sysinfo sys;
 
-	pi = (prop_info*) __system_property_find(prop);
-	if (pi)
-		__system_property_update(pi, value, strlen(value));
-	else
-		__system_property_add(prop, strlen(prop), value, strlen(value));
+    sysinfo(&sys);
+
+    if (sys.totalram > 5072ull * 1024 * 1024) {
+        // from - phone-xhdpi-6144-dalvik-heap.mk
+        heapstartsize = "16m";
+        heapgrowthlimit = "256m";
+        heapsize = "512m";
+        heaptargetutilization = "0.5";
+        heapminfree = "8m";
+        heapmaxfree = "32m";
+    } else if (sys.totalram > 3072ull * 1024 * 1024) {
+        // from - phone-xxhdpi-4096-dalvik-heap.mk
+        heapstartsize = "8m";
+        heapgrowthlimit = "256m";
+        heapsize = "512m";
+        heaptargetutilization = "0.6";
+        heapminfree = "8m";
+        heapmaxfree = "16m";
+    } else {
+        // from - phone-xhdpi-2048-dalvik-heap.mk
+        heapstartsize = "8m";
+        heapgrowthlimit = "192m";
+        heapsize = "512m";
+        heaptargetutilization = "0.75";
+        heapminfree = "512k";
+        heapmaxfree = "8m";
+    }
 }
 
-void property_override_dual(char const system_prop[], char const vendor_prop[], const char value[])
+void NFC_check()
 {
-	property_override(system_prop, value);
-	property_override(vendor_prop, value);
+    // Check NFC
+    std::ifstream infile("/proc/NFC_CHECK");
+    std::string check;
+
+    getline(infile, check);
+    if (!check.compare("SUPPORTED"))
+        property_set("ro.hq.support.nfc", "1");
+    else
+        property_set("ro.hq.support.nfc", "0");
 }
 
 void vendor_load_properties()
 {
+    check_device();
+    NFC_check();
+    
 	property_override("ro.oem_unlock_supported", "0");
-
+    property_set("dalvik.vm.heapstartsize", heapstartsize);
+    property_set("dalvik.vm.heapgrowthlimit", heapgrowthlimit);
+    property_set("dalvik.vm.heapsize", heapsize);
+    property_set("dalvik.vm.heaptargetutilization", heaptargetutilization);
+    property_set("dalvik.vm.heapminfree", heapminfree);
+    property_set("dalvik.vm.heapmaxfree", heapmaxfree);
 }
