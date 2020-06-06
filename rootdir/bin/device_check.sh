@@ -14,10 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Check if device supports NFC
-if grep -q -w RU /mnt/vendor/persist/flag/countrycode.txt; then
-    echo "Device supports NFC"
-else
+
+NFC_check=$(getprop "ro.hq.support.nfc")
+
+if [ "$NFC_check" = "0" ]; then
     echo "Device doesn't support NFC , removing ..."
     # Remove NFC
     rm -rf /system_root/system/app/*Nfc*
@@ -37,4 +37,6 @@ else
     rm -rf /vendor/lib/hw/*nfc*
     rm -rf /vendor/lib64/*nfc*
     rm -rf /vendor/lib64/hw/*nfc*
+else
+    echo "Device supports NFC"
 fi

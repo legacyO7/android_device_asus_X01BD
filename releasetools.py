@@ -50,16 +50,14 @@ abort("Error: This package requires firmware version ' + version_firmware + \
   return
 
 def OTA_InstallEnd(info):
-  info.script.Print("Mounting System, Vendor & Persist")
+  info.script.Print("Mounting System & Vendor")
   info.script.AppendExtra('mount("ext4", "EMMC", "/dev/block/bootdevice/by-name/system", "/system_root");')
   info.script.AppendExtra('mount("ext4", "EMMC", "/dev/block/bootdevice/by-name/vendor", "/vendor");')
-  info.script.AppendExtra('mount("ext4", "EMMC", "/dev/block/bootdevice/by-name/persist", "/mnt/vendor/persist");')
   info.script.Print("Running remove_nfc script")
   RunCustomScript(info, "device_check.sh", "")
-  info.script.Print("Unmounting System, Vendor & Persist")
+  info.script.Print("Unmounting System & Vendor")
   info.script.AppendExtra('unmount("/system_root");')
   info.script.AppendExtra('unmount("/vendor");')
-  info.script.AppendExtra('unmount("/mnt/vendor/persist");')
   return
 
 def RunCustomScript(info, name, arg):
