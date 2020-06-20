@@ -20,22 +20,29 @@ package com.asus.zenparts;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.SELinux;
 import android.os.Handler;
 import androidx.preference.PreferenceFragment;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.asus.zenparts.preferences.CustomSeekBarPreference;
 import com.asus.zenparts.preferences.SecureSettingListPreference;
 import com.asus.zenparts.preferences.SecureSettingSwitchPreference;
 import com.asus.zenparts.preferences.VibratorStrengthPreference;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import com.asus.zenparts.SuShell;
+import com.asus.zenparts.SuTask;
+
+import java.lang.Math.*;
 
 public class DeviceSettings extends PreferenceFragment implements
         Preference.OnPreferenceChangeListener {
+
+    private static final String TAG = "ZenParts";
 
     final static String PREF_TORCH_BRIGHTNESS = "torch_brightness";
     public static final String TORCH_1_BRIGHTNESS_PATH = "/sys/devices/soc/800f000.qcom," +
@@ -53,12 +60,31 @@ public class DeviceSettings extends PreferenceFragment implements
     public static final String PREF_MICROPHONE_GAIN = "microphone_gain";
     public static final String MICROPHONE_GAIN_PATH = "/sys/kernel/sound_control/mic_gain";
 
+
+    private static final String SELINUX_CATEGORY = "selinux";
+    private static final String PREF_SELINUX_MODE = "selinux_mode";
+    private static final String PREF_SELINUX_PERSISTENCE = "selinux_persistence";
+
     private CustomSeekBarPreference mTorchBrightness;
     private VibratorStrengthPreference mVibratorStrength;
     private SecureSettingListPreference mHeadsetType;
     private CustomSeekBarPreference mHeadphoneGain;
     private CustomSeekBarPreference mMicrophoneGain;
+<<<<<<< HEAD
     private SecureSettingSwitchPreference mSelinux;
+=======
+    private CustomSeekBarPreference mEarpieceGain;
+    private CustomSeekBarPreference mSpeakerGain;
+    private SecureSettingSwitchPreference mFastcharge;
+    private SecureSettingListPreference mGPUBOOST;
+    private SecureSettingListPreference mCPUBOOST;
+    private SecureSettingSwitchPreference mBacklightDimmer;
+    private SecureSettingSwitchPreference mTouchboost;
+    private SwitchPreference mSelinuxMode;
+    private SwitchPreference mSelinuxPersistence;
+
+    private static Context mContext;
+>>>>>>> dc859a01... X01BD: ZenParts: Add SELinux Switch
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -92,6 +118,40 @@ public class DeviceSettings extends PreferenceFragment implements
         mMicrophoneGain = (CustomSeekBarPreference) findPreference(PREF_MICROPHONE_GAIN);
         mMicrophoneGain.setOnPreferenceChangeListener(this);
 
+<<<<<<< HEAD
+=======
+        mEarpieceGain = (CustomSeekBarPreference) findPreference(PREF_EARPIECE_GAIN);
+        mEarpieceGain.setOnPreferenceChangeListener(this);
+
+        mSpeakerGain = (CustomSeekBarPreference) findPreference(PREF_SPEAKER_GAIN);
+        mSpeakerGain.setOnPreferenceChangeListener(this);
+
+        if (FileUtils.fileWritable(USB_FASTCHARGE_PATH)) {
+            mFastcharge = (SecureSettingSwitchPreference) findPreference(PREF_USB_FASTCHARGE);
+            mFastcharge.setEnabled(Fastcharge.isSupported());
+            mFastcharge.setChecked(Fastcharge.isCurrentlyEnabled(this.getContext()));
+            mFastcharge.setOnPreferenceChangeListener(new Fastcharge(getContext()));
+        } else {
+            getPreferenceScreen().removePreference(findPreference(CATEGORY_FASTCHARGE));
+        }
+
+        SwitchPreference fpsInfo = (SwitchPreference) findPreference(PREF_KEY_FPS_INFO);
+        fpsInfo.setChecked(prefs.getBoolean(PREF_KEY_FPS_INFO, false));
+        fpsInfo.setOnPreferenceChangeListener(this);
+
+        // SELinux
+        Preference selinuxCategory = findPreference(SELINUX_CATEGORY);
+        mSelinuxMode = (SwitchPreference) findPreference(PREF_SELINUX_MODE);
+        mSelinuxMode.setChecked(SELinux.isSELinuxEnforced());
+        mSelinuxMode.setOnPreferenceChangeListener(this);
+
+        mSelinuxPersistence =
+        (SwitchPreference) findPreference(PREF_SELINUX_PERSISTENCE);
+        mSelinuxPersistence.setOnPreferenceChangeListener(this);
+        mSelinuxPersistence.setChecked(getContext()
+        .getSharedPreferences("selinux_pref", Context.MODE_PRIVATE)
+        .contains(PREF_SELINUX_MODE));
+>>>>>>> dc859a01... X01BD: ZenParts: Add SELinux Switch
     }
 
     @Override
@@ -119,11 +179,64 @@ public class DeviceSettings extends PreferenceFragment implements
                  mSelinux.setChecked(runcommand("su -c 'getenforce'").contains("Enforcing"));    
                 break;
 
+            case PREF_SELINUX_MODE:
+                  if (preference == mSelinuxMode) {
+                  boolean enable = (Boolean) value;
+                  new SwitchSelinuxTask(getActivity()).execute(enable);
+                  setSelinuxEnabled(enable, mSelinuxPersistence.isChecked());
+                  return true;
+                } else if (preference == mSelinuxPersistence) {
+                  setSelinuxEnabled(mSelinuxMode.isChecked(), (Boolean) value);
+                  return true;
+                }
+
+                break;
+
             default:
                 break;
         }
         return true;
     }
+
+        private void setSelinuxEnabled(boolean status, boolean persistent) {
+          SharedPreferences.Editor editor = getContext()
+              .getSharedPreferences("selinux_pref", Context.MODE_PRIVATE).edit();
+          if (persistent) {
+            editor.putBoolean(PREF_SELINUX_MODE, status);
+          } else {
+            editor.remove(PREF_SELINUX_MODE);
+          }
+          editor.apply();
+          mSelinuxMode.setChecked(status);
+        }
+
+        private class SwitchSelinuxTask extends SuTask<Boolean> {
+          public SwitchSelinuxTask(Context context) {
+            super(context);
+          }
+          @Override
+          protected void sudoInBackground(Boolean... params) throws SuShell.SuDeniedException {
+            if (params.length != 1) {
+              Log.e(TAG, "SwitchSelinuxTask: invalid params count");
+              return;
+            }
+            if (params[0]) {
+              SuShell.runWithSuCheck("setenforce 1");
+            } else {
+              SuShell.runWithSuCheck("setenforce 0");
+            }
+          }
+
+          @Override
+          protected void onPostExecute(Boolean result) {
+
+            super.onPostExecute(result);
+            if (!result) {
+              // Did not work, so restore actual value
+              setSelinuxEnabled(SELinux.isSELinuxEnforced(), mSelinuxPersistence.isChecked());
+            }
+          }
+        }
 
     private boolean isAppNotInstalled(String uri) {
         PackageManager packageManager = getContext().getPackageManager();
