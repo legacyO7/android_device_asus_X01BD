@@ -633,6 +633,7 @@
     
     <!-- Smart charging -->
     <bool name="config_smartChargingAvailable">true</bool>
+
     <string name="config_smartChargingSysfsNode" translatable="false">/sys/class/power_supply/battery/input_suspend</string>
     <string name="config_smartChargingSuspendValue" translatable="false">1</string>
     <string name="config_smartChargingResumeValue" translatable="false">0</string>
@@ -640,4 +641,31 @@
      <!-- Enable Smart charging. -->
     <bool name="config_deviceSupportSmartCharging">true</bool>
     
+
+    <!-- Whether or not to use intelligent profiles -->
+    <bool name="config_intelligent_performance_profile">true</bool>
+
+    <!-- Initially set all to balanced with persist.spectrum.profile=0
+    For example if you want to change performance profile from balanced to performance (in my case performance profile is persist.spectrum.profile=1 )
+    then set <string name="config_performance_profile" translatable="false">1</string>, override these config via device tree.
+    -->
+    <string name="config_balanced_profile" translatable="false">0</string>
+    <string name="config_performance_profile" translatable="false">1</string>
+    <string name="config_powersave_profile" translatable="false">2</string>
+    <string name="config_screen_off_profile" translatable="false">2</string>
+
+    <!-- Wired/BT headset focus mode -->
+    <bool name="config_deviceRingtoneFocusMode">true</bool>
+
+    <!-- The list of components which should be automatically disabled for a specific device. -->
+    <string-array name="config_deviceDisabledComponents" translatable="false">
+        <item>com.google.android.gms/com.google.android.gms.nearby.messages.service.NearbyMessagesService</item>
+        <item>com.google.android.gms/com.google.android.gms.nearby.discovery.service.DiscoveryService</item>
+    </string-array>
+
+  <!-- The component name for the default system attention service.
+         This service must be trusted, as it can be activated without explicit consent of the user.
+         See android.attention.AttentionManagerService -->
+    <string name="config_defaultAttentionService" translatable="false">com.google.android.as</string>
+>>>>>>> 8bac4279... X01BD: Set config_defaultAttentionService in overlay
 </resources>
