@@ -22,16 +22,8 @@ def FullOTA_Assertions(info):
   AddModemAssertion(info)
   return
 
-def FullOTA_InstallEnd(info):
-  OTA_InstallEnd(info)
-  return
-
 def IncrementalOTA_Assertions(info):
   AddModemAssertion(info)
-  return
-
-def IncrementalOTA_InstallEnd(info):
-  OTA_InstallEnd(info)
   return
 
 def AddModemAssertion(info):
@@ -47,19 +39,4 @@ def AddModemAssertion(info):
 abort("Error: This package requires firmware version ' + version_firmware + \
 ' or newer. Please upgrade firmware and retry!"););'
       info.script.AppendExtra(cmd)
-  return
-
-def OTA_InstallEnd(info):
-  info.script.Print("Mounting System & Vendor")
-  info.script.AppendExtra('mount("ext4", "EMMC", "/dev/block/bootdevice/by-name/system", "/system_root");')
-  info.script.AppendExtra('mount("ext4", "EMMC", "/dev/block/bootdevice/by-name/vendor", "/vendor");')
-  info.script.Print("Running remove_nfc script")
-  RunCustomScript(info, "device_check.sh", "")
-  info.script.Print("Unmounting System & Vendor")
-  info.script.AppendExtra('unmount("/system_root");')
-  info.script.AppendExtra('unmount("/vendor");')
-  return
-
-def RunCustomScript(info, name, arg):
-  info.script.AppendExtra(('run_program("/tmp/install/bin/%s", "%s");' % (name, arg)))
   return

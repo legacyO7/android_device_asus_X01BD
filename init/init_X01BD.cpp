@@ -92,9 +92,7 @@ void NFC_check()
 
     getline(infile, check);
     if (!check.compare("SUPPORTED"))
-        property_set("ro.hq.support.nfc", "1");
-    else
-        property_set("ro.hq.support.nfc", "0");
+        property_set("ro.boot.product.hardware.sku", "X01BD");
 }
 void property_override(char const prop[], char const value[])
 {
