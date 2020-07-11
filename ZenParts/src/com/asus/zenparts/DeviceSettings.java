@@ -28,6 +28,7 @@ import androidx.preference.PreferenceCategory;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
+import androidx.preference.SwitchPreference;
 
 import com.asus.zenparts.preferences.CustomSeekBarPreference;
 import com.asus.zenparts.preferences.SecureSettingListPreference;
@@ -53,8 +54,6 @@ public class DeviceSettings extends PreferenceFragment implements
     public static final String KEY_VIBSTRENGTH = "vib_strength";
 
     public static final String PREF_HEADPHONE_GAIN = "headphone_gain";
-    public static final String PREF_SELINUX = "selinux";
-    public static final String CATAGORY_SELINUX = "toggleselinux";
    
     public static final String HEADPHONE_GAIN_PATH = "/sys/kernel/sound_control/headphone_gain";
     public static final String PREF_MICROPHONE_GAIN = "microphone_gain";
@@ -67,24 +66,14 @@ public class DeviceSettings extends PreferenceFragment implements
 
     private CustomSeekBarPreference mTorchBrightness;
     private VibratorStrengthPreference mVibratorStrength;
-    private SecureSettingListPreference mHeadsetType;
     private CustomSeekBarPreference mHeadphoneGain;
     private CustomSeekBarPreference mMicrophoneGain;
-<<<<<<< HEAD
-    private SecureSettingSwitchPreference mSelinux;
-=======
     private CustomSeekBarPreference mEarpieceGain;
     private CustomSeekBarPreference mSpeakerGain;
-    private SecureSettingSwitchPreference mFastcharge;
-    private SecureSettingListPreference mGPUBOOST;
-    private SecureSettingListPreference mCPUBOOST;
-    private SecureSettingSwitchPreference mBacklightDimmer;
-    private SecureSettingSwitchPreference mTouchboost;
     private SwitchPreference mSelinuxMode;
     private SwitchPreference mSelinuxPersistence;
 
     private static Context mContext;
->>>>>>> dc859a01... X01BD: ZenParts: Add SELinux Switch
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -104,40 +93,12 @@ public class DeviceSettings extends PreferenceFragment implements
 
         boolean enhancerEnabled;
 
-        if (runcommand("su -c 'getenforce'").equals("")) {
-            getPreferenceScreen().removePreference(findPreference(CATAGORY_SELINUX));
-        } else {        
-         mSelinux = (SecureSettingSwitchPreference) findPreference(PREF_SELINUX);
-            mSelinux.setChecked(runcommand("su -c 'getenforce'").contains("Enforcing"));           
-        }
-
-
         mHeadphoneGain = (CustomSeekBarPreference) findPreference(PREF_HEADPHONE_GAIN);
         mHeadphoneGain.setOnPreferenceChangeListener(this);
 
         mMicrophoneGain = (CustomSeekBarPreference) findPreference(PREF_MICROPHONE_GAIN);
         mMicrophoneGain.setOnPreferenceChangeListener(this);
 
-<<<<<<< HEAD
-=======
-        mEarpieceGain = (CustomSeekBarPreference) findPreference(PREF_EARPIECE_GAIN);
-        mEarpieceGain.setOnPreferenceChangeListener(this);
-
-        mSpeakerGain = (CustomSeekBarPreference) findPreference(PREF_SPEAKER_GAIN);
-        mSpeakerGain.setOnPreferenceChangeListener(this);
-
-        if (FileUtils.fileWritable(USB_FASTCHARGE_PATH)) {
-            mFastcharge = (SecureSettingSwitchPreference) findPreference(PREF_USB_FASTCHARGE);
-            mFastcharge.setEnabled(Fastcharge.isSupported());
-            mFastcharge.setChecked(Fastcharge.isCurrentlyEnabled(this.getContext()));
-            mFastcharge.setOnPreferenceChangeListener(new Fastcharge(getContext()));
-        } else {
-            getPreferenceScreen().removePreference(findPreference(CATEGORY_FASTCHARGE));
-        }
-
-        SwitchPreference fpsInfo = (SwitchPreference) findPreference(PREF_KEY_FPS_INFO);
-        fpsInfo.setChecked(prefs.getBoolean(PREF_KEY_FPS_INFO, false));
-        fpsInfo.setOnPreferenceChangeListener(this);
 
         // SELinux
         Preference selinuxCategory = findPreference(SELINUX_CATEGORY);
@@ -151,7 +112,7 @@ public class DeviceSettings extends PreferenceFragment implements
         mSelinuxPersistence.setChecked(getContext()
         .getSharedPreferences("selinux_pref", Context.MODE_PRIVATE)
         .contains(PREF_SELINUX_MODE));
->>>>>>> dc859a01... X01BD: ZenParts: Add SELinux Switch
+
     }
 
     @Override
@@ -169,14 +130,6 @@ public class DeviceSettings extends PreferenceFragment implements
 
             case PREF_MICROPHONE_GAIN:
                 FileUtils.setValue(MICROPHONE_GAIN_PATH, (int) value);
-                break;
-
-            case PREF_SELINUX:
-                if(runcommand("su -c 'getenforce'").contains("Enforcing"))
-                 runcommand("su -c " + '"' + '"' + "setenforce 0" + '"' + '"');
-                else
-                 runcommand("su -c " + '"' + '"' + "setenforce 1" + '"' + '"');
-                 mSelinux.setChecked(runcommand("su -c 'getenforce'").contains("Enforcing"));    
                 break;
 
             case PREF_SELINUX_MODE:
@@ -246,25 +199,5 @@ public class DeviceSettings extends PreferenceFragment implements
         } catch (PackageManager.NameNotFoundException e) {
             return true;
         }
-    }
-
-    public String runcommand(String command) {
-        StringBuilder log = new StringBuilder();
-        try {
-            Process process = Runtime.getRuntime().exec(command);
-            process.waitFor();
-            BufferedReader bufferedReader = new BufferedReader(
-                    new InputStreamReader(process.getInputStream()));
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                log.append(line).append("\n");
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return log.toString();
     }
 }

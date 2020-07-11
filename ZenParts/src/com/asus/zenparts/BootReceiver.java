@@ -29,12 +29,17 @@ import com.asus.zenparts.R;
 import com.asus.zenparts.Utils;
 import com.asus.zenparts.preferences.VibratorStrengthPreference;
 
+import androidx.preference.PreferenceManager;
+
 import java.lang.Math.*;
+
+import com.asus.zenparts.SuShell;
+import com.asus.zenparts.SuTask;
 
 import java.io.IOException;
 import java.util.List;
 
-public class BootReceiver extends BroadcastReceiver implements Utils {
+public class BootReceiver extends BroadcastReceiver {
 
     private static final String PREF_SELINUX_MODE = "selinux_mode";
 
@@ -106,6 +111,7 @@ public class BootReceiver extends BroadcastReceiver implements Utils {
         int gain = Settings.Secure.getInt(context.getContentResolver(),
                 DeviceSettings.PREF_HEADPHONE_GAIN, 4);
         FileUtils.setValue(DeviceSettings.HEADPHONE_GAIN_PATH, gain + " " + gain);
+         FileUtils.setValue("/proc/tpd_gesture", "1");
         FileUtils.setValue(DeviceSettings.MICROPHONE_GAIN_PATH, Settings.Secure.getInt(context.getContentResolver(),
                 DeviceSettings.PREF_MICROPHONE_GAIN, 0));
         }
