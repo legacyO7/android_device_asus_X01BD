@@ -1,5 +1,6 @@
 /*
-   Copyright (c) 2014, The Linux Foundation. All rights reserved.
+   Copyright (c) 2016, The CyanogenMod Project
+   Copyright (c) 2019, The LineageOS Project
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are
@@ -27,54 +28,93 @@
    IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <stdlib.h>
+#include <cstdlib>
+#include <fstream>
+#include <string.h>
+#include <sys/sysinfo.h>
+#include <unistd.h>
+
+#include <android-base/properties.h>
 #define _REALLY_INCLUDE_SYS__SYSTEM_PROPERTIES_H_
 #include <sys/_system_properties.h>
 
-#include <android-base/properties.h>
-#include "property_service.h"
 #include "vendor_init.h"
+#include "property_service.h"
 
 using android::base::GetProperty;
-
 using android::init::property_set;
 
+char const *heapstartsize;
+char const *heapgrowthlimit;
+char const *heapsize;
+char const *heapminfree;
+char const *heapmaxfree;
+char const *heaptargetutilization;
+
+void check_device()
+{
+    struct sysinfo sys;
+
+    sysinfo(&sys);
+
+    if (sys.totalram > 5072ull * 1024 * 1024) {
+        // from - phone-xhdpi-6144-dalvik-heap.mk
+        heapstartsize = "16m";
+        heapgrowthlimit = "256m";
+        heapsize = "512m";
+        heaptargetutilization = "0.5";
+        heapminfree = "8m";
+        heapmaxfree = "32m";
+    } else if (sys.totalram > 3072ull * 1024 * 1024) {
+        // from - phone-xxhdpi-4096-dalvik-heap.mk
+        heapstartsize = "8m";
+        heapgrowthlimit = "256m";
+        heapsize = "512m";
+        heaptargetutilization = "0.6";
+        heapminfree = "8m";
+        heapmaxfree = "16m";
+    } else {
+        // from - phone-xhdpi-2048-dalvik-heap.mk
+        heapstartsize = "8m";
+        heapgrowthlimit = "192m";
+        heapsize = "512m";
+        heaptargetutilization = "0.75";
+        heapminfree = "512k";
+        heapmaxfree = "8m";
+    }
+}
+
+void NFC_check()
+{
+    // Check NFC
+    std::ifstream infile("/proc/NFC_CHECK");
+    std::string check;
+
+    getline(infile, check);
+    if (!check.compare("SUPPORTED"))
+        property_set("ro.boot.product.hardware.sku", "X01BD");
+}
 void property_override(char const prop[], char const value[])
 {
-    prop_info *pi;
+	prop_info *pi;
 
-    pi = (prop_info*) __system_property_find(prop);
-    if (pi)
-        __system_property_update(pi, value, strlen(value));
-    else
-        __system_property_add(prop, strlen(prop), value, strlen(value));
-}
-
-void property_override_dual(char const system_prop[], char const vendor_prop[],
-    char const value[])
-{
-    property_override(system_prop, value);
-    property_override(vendor_prop, value);
-}
-
-void property_override_triple(char const system_prop[], char const vendor_prop[], char const bootimg_prop[], char const value[])
-{
-    property_override(system_prop, value);
-    property_override(vendor_prop, value);
-    property_override(bootimg_prop, value);
+	pi = (prop_info*) __system_property_find(prop);
+	if (pi)
+		__system_property_update(pi, value, strlen(value));
+	else
+		__system_property_add(prop, strlen(prop), value, strlen(value));
 }
 
 void vendor_load_properties()
 {
-    std::string platform = android::base::GetProperty("ro.board.platform", "");
-
-    if (platform != ANDROID_TARGET)
-        return;
-
-    property_override_dual("ro.product.device", "ro.vendor.product.device", "ASUS_X01BD_1");
-    property_override_dual("ro.product.model", "ro.vendor.product.model", "ASUS_X01BDA");
-    property_override_dual("ro.product.name", "ro.vendor.product.name", "WW_X01BD");
-    property_override("ro.build.description", "sdm660_64-user 9 PKQ1 1162 release-keys");
-    property_override_triple("ro.build.fingerprint", "ro.vendor.build.fingerprint", "ro.bootimage.build.fingerprint", "asus/WW_X01BD/ASUS_X01BD_1:9/PKQ1/16.2017.1905.065-20190507:user/release-keys");
-	
+    check_device();
+    NFC_check();
+    
+	property_override("ro.oem_unlock_supported", "0");
+    property_set("dalvik.vm.heapstartsize", heapstartsize);
+    property_set("dalvik.vm.heapgrowthlimit", heapgrowthlimit);
+    property_set("dalvik.vm.heapsize", heapsize);
+    property_set("dalvik.vm.heaptargetutilization", heaptargetutilization);
+    property_set("dalvik.vm.heapminfree", heapminfree);
+    property_set("dalvik.vm.heapmaxfree", heapmaxfree);
 }

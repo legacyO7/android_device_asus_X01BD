@@ -1,3 +1,5 @@
+# Allow hal_wifi_default to write to sysfs_wifi
 allow hal_wifi_default sysfs_wifi:file w_file_perms;
 
-allow hal_wifi_default debugfs_wlan:dir r_dir_perms;
+# Allow hal_wifi_default to write to proc_net
+allow hal_wifi_default proc_net:file w_file_perms;

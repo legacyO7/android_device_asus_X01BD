@@ -1,1 +1,2 @@
-allow sensors nfc_sensors_prop:file r_file_perms;
+# Allow sensors to set nfc_sensors_prop
+set_prop(sensors, nfc_sensors_prop)

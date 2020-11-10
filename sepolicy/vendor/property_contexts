@@ -1,34 +1,12 @@
-persist.net.doxlat                            u:object_r:vendor_net_radio_prop:s0
-persist.vendor.camera.debug.logfile           u:object_r:vendor_cfg_prop:s0
-persist.nfc                                   u:object_r:nfc_prop:s0
-ro.hq.support.nfc                             u:object_r:nfc_sensors_prop:s0
-use.audio.eu.parameters	                      u:object_r:hal_audio_prop:s0
+# Camera
+persist.vendor.camera.pickres.prop_hdr        u:object_r:vendor_camera_prop:s0
 
-persist.cdfinger.ready                        u:object_r:cdfinger_prop:s0
+# Fingerprint
 property.cdfinger.enablesave                  u:object_r:cdfinger_prop:s0
-persist.vendor.runin.fp                       u:object_r:vendor_cfg_prop:s0
+persist.vendor.runin.fp                       u:object_r:cdfinger_prop:s0
 
-persist.camera.gyro.disable                   u:object_r:vendor_cfg_prop:s0
-persist.console.silent.config                 u:object_r:vendor_cfg_prop:s0
-persist.bt.max.hs.connections                 u:object_r:vendor_cfg_prop:s0
+# NFC
+ro.hq.support.nfc                             u:object_r:nfc_sensors_prop:s0
 
-# TODO
-sys.usb.configfs                              u:object_r:vendor_usb_prop:s0
-
-# meh this should have been covered already?
-qemu.hw.mainkeys                              u:object_r:vendor_cfg_prop:s0
-
-# Asus bokeh camera 
-vendor.debug.camera.prop_picselfie            u:object_r:vendor_camera_prop:s0
-vendor.debug.camera.prop_bokeh                u:object_r:vendor_camera_prop:s0
-vendor.debug.camera.prop_hdr                  u:object_r:vendor_camera_prop:s0
-persist.vendor.camera.bokeh.dumpimg           u:object_r:vendor_camera_prop:s0
-vendor.debug.camera.prop_dis                  u:object_r:vendor_camera_prop:s0
-sys.nvram.btmac                               u:object_r:nvram_btwifi_prop:s0
-sys.nvram.wifimac                             u:object_r:nvram_btwifi_prop:s0
-# HAL3
-persist.camera.HAL3.enable  u:object_r:camera_prop:s0
-
-# Power
-vendor.powerhal.state u:object_r:power_prop:s0
-vendor.powerhal.audio u:object_r:power_prop:s0
+# WiFi
+wifi.active.interface                         u:object_r:wifi_prop:s0

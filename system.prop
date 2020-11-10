@@ -1,3 +1,0 @@
-# camhal1
-vendor.camera.hal1.packagelist=com.whatsapp, com.skype.raider, com.snapchat.android, com.instagram.android 
-ro.sf.lcd_density=403

@@ -1,0 +1,79 @@
+# Audio
+ro.config.media_vol_steps=30
+ro.config.vc_call_vol_steps=11
+
+# Bluetooth
+vendor.bluetooth.soc=cherokee
+persist.bluetooth.a2dp_offload.cap=sbc-aac-aptx-aptxhd-ldac
+persist.bluetooth.a2dp_offload.disabled=false
+persist.vendor.bt.a2dp.aac_whitelist=false
+persist.vendor.qcom.bluetooth.enable.splita2dp=true
+persist.vendor.qcom.bluetooth.a2dp_offload_cap=sbc-aptx-aptxhd-aac-ldac
+ro.bluetooth.a2dp_offload.supported=true
+ro.bluetooth.library_name=libbluetooth_qti.so
+
+# Camera
+vendor.camera.aux.packagelist=org.codeaurora.snapcam,org.lineageos.snap
+
+# CNE
+persist.vendor.cne.feature=1
+
+# Data modules
+persist.data.df.dev_name=rmnet_usb0
+persist.vendor.data.mode=concurrent
+ro.vendor.use_data_netmgrd=true
+
+# Display
+vendor.gralloc.enable_fb_ubwc=1
+vendor.display.disable_skip_validate=1
+
+# DPM
+persist.vendor.dpm.feature=1
+persist.vendor.dpm.loglevel=0
+
+# GPS
+persist.vendor.overlay.izat.optin=rro
+
+# Graphics
+debug.sf.early_app_phase_offset_ns=1500000
+debug.sf.early_gl_app_phase_offset_ns=15000000
+debug.sf.early_gl_phase_offset_ns=3000000
+debug.sf.early_phase_offset_ns=1500000
+dev.pm.dyn_samplingrate=1
+ro.surface_flinger.force_hwc_copy_for_virtual_displays=true
+ro.surface_flinger.max_virtual_display_dimension=4096
+ro.surface_flinger.vsync_event_phase_offset_ns=2000000
+ro.surface_flinger.vsync_sf_event_phase_offset_ns=6000000
+sdm.debug.disable_skip_validate=1
+
+# Media
+media.settings.xml=/vendor/etc/media_profiles_vendor.xml
+media.stagefright.thumbnail.prefer_hw_codecs=true
+vidc.enc.target_support_bframe=1
+vendor.vidc.enc.disable_bframes=1
+vendor.vidc.dec.enable.downscalar=1
+
+# Netflix
+ro.netflix.bsp_rev=Q660-13149-1
+
+# NFC
+ro.nfc.port=I2C
+
+# QC framework value-adds
+ro.vendor.qti.va_aosp.support=1
+
+# RIL
+DEVICE_PROVISIONED=1
+persist.radio.VT_CAM_INTERFACE=2
+persist.sys.fflag.override.settings_network_and_internet_v2=true
+rild.libpath=/vendor/lib64/libril-qc-hal-qmi.so
+ril.subscription.types=NV,RUIM
+telephony.lteOnCdmaDevice=1
+
+# Time
+persist.timed.enable=true
+
+# WFD
+persist.debug.wfd.enable=1
+persist.hwc.enable_vds=1
+persist.sys.wfd.virtual=0

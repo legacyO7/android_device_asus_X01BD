@@ -1,21 +1,2 @@
-r_dir_file(hal_power_default, debugfs_wlan)
+# Allow hal_power_default to read gesture node
 allow hal_power_default proc_tpd_gesture:file rw_file_perms;
-
-# To do powerhint on nodes defined in powerhint.json
-allow hal_power_default sysfs_kgsl:lnk_file r_file_perms;
-allow hal_power_default sysfs_graphics:file r_file_perms;
-allow hal_power_default device_latency:chr_file rw_file_perms;
-allow hal_power_default input_device:chr_file rw_file_perms;
-
-allow hal_power_default {
-  sysfs_devfreq
-  sysfs_graphics
-  sysfs_kgsl
-  device_latency
-}:dir search;
-
-# To get/set powerhal state property
-set_prop(hal_power_default, power_prop)
-
-# To dump
-allow hal_power_default cgroup:file read;

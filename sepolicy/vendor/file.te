@@ -1,12 +1,13 @@
-type sysfs_wifi, sysfs_type, fs_type;
-type debugfs_wlan, debugfs_type, fs_type;
-type vendor_kl_file, vendor_file_type, file_type;
-type proc_tpd_gesture, fs_type, proc_type;
-type kcal_dev, sysfs_type, file_type;
-type nvram_btwifi_tmpfs, fs_type;
-
-# Fingerprint
-type gxfingerprint_data_file, core_data_file_type, data_file_type, file_type;
 type cdfinger_data_file, core_data_file_type, data_file_type, file_type;
-type focaltech_data_file, data_file_type, file_type;
+type public_adsprpcd_file, file_type;
+type proc_tpd_gesture, fs_type, proc_type;
 type sysfs_call_status, sysfs_type, fs_type;
+type sysfs_wifi, sysfs_type, fs_type;
+
+# ZenParts
+type kcal_dev, sysfs_type, fs_type;
+type sysfs_backlight, sysfs_type, fs_type;
+type sysfs_egain, sysfs_type, fs_type;
+type sysfs_hgain, sysfs_type, fs_type;
+type sysfs_mgain, sysfs_type, fs_type;
+type sysfs_tbrightness, sysfs_type, fs_type;

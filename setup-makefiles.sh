@@ -1,6 +1,7 @@
 #!/bin/bash
 #
-# Copyright (C) 2018 The LineageOS Project
+# Copyright (C) 2016 The CyanogenMod Project
+# Copyright (C) 2017 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,11 +18,10 @@
 
 set -e
 
-# Required!
 DEVICE=X01BD
 VENDOR=asus
 
-INITIAL_COPYRIGHT_YEAR=2018
+INITIAL_COPYRIGHT_YEAR=2019
 
 # Load extract_utils and do some sanity checks
 MY_DIR="${BASH_SOURCE%/*}"
@@ -43,12 +43,8 @@ setup_vendor "$DEVICE" "$VENDOR" "$LINEAGE_ROOT"
 write_headers
 
 write_makefiles "$MY_DIR"/proprietary-files.txt true
-
-cat << EOF >> "$BOARDMK"
-ifeq (\$(WITH_TWRP),true)
-TARGET_RECOVERY_DEVICE_DIRS += vendor/$VENDOR/$DEVICE/proprietary
-endif
-EOF
+echo "" >> "$PRODUCTMK"
+write_makefiles "$MY_DIR"/proprietary-files-qc.txt true
 
 # Finish
 write_footers
