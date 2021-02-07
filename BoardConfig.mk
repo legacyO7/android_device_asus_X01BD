@@ -20,7 +20,7 @@ TARGET_BOOTLOADER_BOARD_NAME := sdm660
 DEVICE_MANIFEST_FILE += $(DEVICE_PATH)/manifest.xml
 
 # Kernel
-TARGET_KERNEL_CONFIG := X01BD_defconfig
+TARGET_KERNEL_CONFIG := katnis_defconfig
 
 # Power
 TARGET_TAP_TO_WAKE_NODE := "/proc/tpd_gesture"
