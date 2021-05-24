@@ -39,7 +39,7 @@ public class VibratorStrengthPreference extends CustomSeekBarPreference {
     private static int mDefVal = mMaxVal - (mMaxVal - mMinVal) / 4;
     private Vibrator mVibrator;
 
-    private static final String FILE_LEVEL = "/sys/class/timed_output/vibrator/vtg_level";
+    private static final String FILE_LEVEL = "/sys/class/leds/vibrator/vmax_mv";
     private static final long testVibrationPattern[] = {0,250};
 
     public VibratorStrengthPreference(Context context, AttributeSet attrs) {

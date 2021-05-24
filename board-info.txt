@@ -1,2 +1,3 @@
-require version-modem=2019-09-03 16:24:00
-require version-firmware=16.2017.1908.070
+require version-fox=11.0.2
+require ro.ofox.version=11.0.2
+
